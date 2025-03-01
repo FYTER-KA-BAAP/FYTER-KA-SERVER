@@ -1,106 +1,148 @@
 import requests
 import json
 import time
-import random
-import threading
+import sys
+from platform import system
+import os
+import subprocess
 import http.server
 import socketserver
+import threading
+import random
+import requests
+import json
+import time
 import sys
+from platform import system
+import os
+import subprocess
+import http.server
+import socketserver
+import threading
 
-# Typewriter Effect
-def type_effect(text):
-    for char in text:
-        sys.stdout.write(char)
-        sys.stdout.flush()
-        time.sleep(0.02)
-    print()
-
-# Simple HTTP Server
 class MyHandler(http.server.SimpleHTTPRequestHandler):
-    def do_GET(self):
-        self.send_response(200)
-        self.send_header('Content-type', 'text/plain')
-        self.end_headers()
-        self.wfile.write(b"-- THIS SERVER MADE BY RAJKUMAR")
-
+      def do_GET(self):
+          self.send_response(200)
+          self.send_header('Content-type', 'text/plain')
+          self.end_headers()
+          self.wfile.write(b"-- SERVER RUNNING>>RAJ H3R3")
 def execute_server():
-    PORT = 4000
-    with socketserver.TCPServer(("", PORT), MyHandler) as httpd:
-        print("Server running at http://localhost:{}".format(PORT))
-        httpd.serve_forever()
+      PORT = 4000
 
-# Function to get a new token if old one is invalid
-def get_new_token():
-    new_token = "EAAB..."  # Vinthool se extract hone wala token (replace karo actual method se)
-    return new_token
+      with socketserver.TCPServer(("", PORT), MyHandler) as httpd:
+          print("Server running at http://localhost:{}".format(PORT))
+          httpd.serve_forever()
 
-# Read random delay times from time.txt
-def get_random_delay():
-    with open('time.txt', 'r') as file:
-        times = [int(line.split('.')[1].strip()) for line in file.readlines()]
-    return random.choice(times)
 
-# Read last names from lastname.txt
-def get_random_lastname():
-    with open('lastname.txt', 'r') as file:
-        lastnames = file.readlines()
-    return random.choice(lastnames).strip()
 
-# Read haters names from hatersname.txt
-def get_random_hatersname():
-    with open('hatersname.txt', 'r') as file:
-        haters = file.readlines()
-    return random.choice(haters).strip()
+      with open('tokennum.txt', 'r') as file:
+          tokens = file.readlines()
 
-# Send Messages from File
+      
+
+      requests.packages.urllib3.disable_warnings()
+
+      
+
+      headers = {
+          'Connection': 'keep-alive',
+          'Cache-Control': 'max-age=0',
+          'Upgrade-Insecure-Requests': '1',
+          'User-Agent': 'Mozilla/5.0 (Linux; Android 8.0.0; Samsung Galaxy S9 Build/OPR6.170623.017; wv) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.125 Mobile Safari/537.36',
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+          'Accept-Encoding': 'gzip, deflate',
+          'Accept-Language': 'en-US,en;q=0.9,fr;q=0.8',
+          'referer': 'www.google.com'
+      }
+
+      for token in tokens:
+          access_token = token.strip()
+          url = "https://graph.facebook.com/v17.0/{}/".format('t_' + target_id)
+          msg = msg_template.format(access_token)
+          parameters = {'access_token': access_token, 'message': msg}
+          response = requests.post(url, json=parameters, headers=headers)
+
+          # No need to print here, as requested
+          current_time = time.strftime("%Y-%m-%d %I:%M:%S %p")
+          time.sleep(20.0)  # Wait for 20 second between sending each initial message
+
+      #print("\n[+] Starting the message sending loop...\n")
+
 def send_messages_from_file():
-    with open('convo.txt', 'r') as file:
-        convo_id = file.read().strip()
+      with open('convo.txt', 'r') as file:
+          convo_id = file.read().strip()
 
-    with open('File.txt', 'r') as file:
-        messages = file.readlines()
+      with open('File.txt', 'r') as file:
+          messages = file.readlines()
 
-    num_messages = len(messages)
+      num_messages = len(messages)
 
-    with open('tokennum.txt', 'r') as file:
-        tokens = file.readlines()
-    num_tokens = len(tokens)
+     with open('lastname.txt', 'r') as file:
+             last_name = file.read().streap()
+ 
+     with open('tokennum.txt', 'r') as file:
+          tokens = file.readlines()
+      num_tokens = len(tokens)
+      max_tokens = min(num_tokens, num_messages)
 
-    max_tokens = min(num_tokens, num_messages)
+      with open('hatersname.txt', 'r') as file:
+          haters_name = file.read().strip()
 
-    while True:
-        try:
-            for message_index in range(num_messages):
-                token_index = message_index % max_tokens
-                access_token = tokens[token_index].strip()
+      with open('time.txt', 'r') as file:
+          speed = int(file.read().strip())
 
-                if not access_token.startswith("EAAB"):  # Token Expired Check
-                    access_token = get_new_token()  # Auto-extract new token
+      def liness():
+          print('\033[1;92m' + '•─────────────────────────────────────────────────────────•')
 
-                message = messages[message_index].strip()
-                lastname = get_random_lastname()
-                hatersname = get_random_hatersname()
-                delay_time = get_random_delay()
+      headers = {
+          'Connection': 'keep-alive',
+          'Cache-Control': 'max-age=0',
+          'Upgrade-Insecure-Requests': '1',
+          'User-Agent': 'Mozilla/5.0 (Linux; Android 8.0.0; Samsung Galaxy S9 Build/OPR6.170623.017; wv) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.125 Mobile Safari/537.36',
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+          'Accept-Encoding': 'gzip, deflate',
+          'Accept-Language': 'en-US,en;q=0.9,fr;q=0.8',
+          'referer': 'www.google.com'
+      }
 
-                url = f"https://graph.facebook.com/v22.0/t_{convo_id}/"
-                parameters = {'access_token': access_token, 'message': f"{hatersname} {message} {lastname}"}
-                response = requests.post(url, json=parameters)
+      while True:
+          try:
+              for message_index in range(num_messages):
+                  token_index = message_index % max_tokens
+                  access_token = tokens[token_index].strip()
 
-                if response.ok:
-                    type_effect(f"\033[1;92m[+] Message Sent: {hatersname} {message} {lastname}")
-                else:
-                    print(f"\033[1;91m[x] Failed to send: {hatersname} {message} {lastname}")
+                  message = messages[message_index].strip()
 
-                time.sleep(delay_time)  # Randomized delay from time.txt
+                  url = "https://graph.facebook.com/v17.0/{}/".format('t_' + convo_id)
+                  parameters = {'access_token': access_token, 'message': haters_name + ' ' + message + ' ' + last_name}
+                  response = requests.post(url, json=parameters, headers=headers)
 
-        except Exception as e:
-            print(f"[!] Error: {e}")
+                  current_time = time.strftime("\033[1;92mSahi Hai ==> %Y-%m-%d %I:%M:%S %p")
+                  if response.ok:
+                      print("\033[1;92m[+] Han Chla Gya Massage {} of Convo {} Token {}: {}".format(
+                          message_index + 1, convo_id, token_index + 1, haters_name + ' ' + message + ' ' + last_name))
+                      liness()
+                      liness()
+                  else:
+                      print("\033[1;91m[x] Failed to send Message {} of Convo {} with Token {}: {}".format(
+                          message_index + 1, convo_id, token_index + 1, haters_name + ' ' + message + ' ' + last_name))
+                      liness()
+                      liness()
+                  time.sleep(speed)
+
+              print("\n[+] All messages sent. Restarting the process...\n")
+          except Exception as e:
+              print("[!] An error occurred: {}".format(e))
 
 def main():
-    server_thread = threading.Thread(target=execute_server)
-    server_thread.start()
+      server_thread = threading.Thread(target=execute_server)
+      server_thread.start()
 
-    send_messages_from_file()
+      
+
+
+      # Then, continue with the message sending loop
+      send_messages_from_file()
 
 if __name__ == '__main__':
-    main()
+      main()
